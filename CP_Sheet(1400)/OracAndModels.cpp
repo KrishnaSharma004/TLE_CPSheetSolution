@@ -121,18 +121,32 @@ ll calculateSumOfFirstX(int x){
     return x*1ll*(x+1)/2;
 }
 void logic(){
-    int n,x,m;
-    cin >> n >> x >> m;
-    int p1=x,p2=x;
-    floop(i,0,m){
-        int l,r;
-        cin >> l >> r;
-        if(r>=p1 and l<=p2){
-            p1=min(p1,l);
-            p2=max(p2,r);
+    int n;
+    cin >> n;
+    int a[n + 1];
+    
+    floop(i,1,n+1){
+        cin >> a[i];
+    }
+    
+    int dp[n + 1];
+    floop(i,0,n+1){
+        dp[i] = 1;
+    }
+    
+    floop(i,2,n+1){ 
+        for(int j = 1; j * j <= i; j++){
+            if(i % j != 0) continue;
+            if(a[j] < a[i]) {
+                dp[i] = max(dp[i], 1 + dp[j]);
+            }
+            if(a[i/j] < a[i]) {
+                dp[i] = max(dp[i], 1 + dp[i / j]);
+            }
         }
     }
-    cout << p2-p1+1 << nl;
+    
+    cout << *max_element(dp,dp+n+1) << nl;
 }
 int main(){
     int t;

@@ -61,9 +61,6 @@ vint FindMax(vint &arr){
     floop(i,0,3) ans[i]=tmp[i].second;
     return ans;
 }
-ll lcm(ll num1,ll num2){
-    return (num1*num2)/(gcd(num1,num2));
-}
 ll calculatesum(ll start,ll end){
     ll sum = ((start +end)*(end-start +1))/2;
 

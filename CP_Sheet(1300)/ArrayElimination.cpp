@@ -61,9 +61,6 @@ vint FindMax(vint &arr){
     floop(i,0,3) ans[i]=tmp[i].second;
     return ans;
 }
-ll lcm(ll num1,ll num2){
-    return (num1*num2)/(gcd(num1,num2));
-}
 ll calculatesum(ll start,ll end){
     ll sum = ((start +end)*(end-start +1))/2;
 
@@ -139,7 +136,7 @@ void logic(){
     fauto(i,mp){
         f=0;
         if(gcd==0) gcd = i.second;
-        else gcd = __gcd(gcd,i.second);
+        //else gcd = __gcd(gcd,i.second);  used in the code !!!
     }
     if(f){
         floop(i,0,n){
