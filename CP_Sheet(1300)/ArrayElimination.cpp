@@ -136,7 +136,7 @@ void logic(){
     fauto(i,mp){
         f=0;
         if(gcd==0) gcd = i.second;
-        //else gcd = __gcd(gcd,i.second);  used in the code !!!
+        else gcd = __gcd(gcd,i.second);  
     }
     if(f){
         floop(i,0,n){
