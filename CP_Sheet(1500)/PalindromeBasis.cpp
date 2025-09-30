@@ -1,4 +1,3 @@
-
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
@@ -125,49 +124,44 @@ int dfs(int node,vvint &adj,str &s){
 ll calculateSumOfFirstX(int x){
     return x*1ll*(x+1)/2;
 }
-void logic(){
-    int n;
-    cin >> n;
-    vint a(n);
-    int x = 0;
-    floop(i,0,n){
-        cin >> a[i];
-        x ^= a[i];
-    }
-    if (x == 0) {
-        cout << "YES" << nl;
-        return;
-    }
-
-    int pr = 0, pr_ind = -1;
-    floop(i,0,n){
-        pr ^= a[i];
-        if (pr == x) {
-            pr_ind = i;
-            break;
-        }
-    int suf = 0, suf_ind = -1;
-    for (int i = n - 1; i >= 0; i--){
-        suf ^= a[i];
-        if (suf == x) {
-            suf_ind = i;
-            break;
-        }
-    }
-    if (suf_ind > pr_ind)
-        cout << "YES" << nl;
-    else
-        cout << "NO" << nl;
-    }
+bool check(int n) {
+    string s = to_string(n);
+    string str = s;
+    reverse(s.begin(), s.end());
+    return (s == str);
 }
+
+const int M = 1e9 + 7;
+const int N = 4e4 + 5;
+
+
 int32_t main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+
+    vint a;
+    floop(i,1,N){
+        if (check(i)) 
+            a.push_back(i);
+    }
+    int sz = a.size();
+
+    vint dp(N, 0);
+    dp[0] = 1;
+
+    floop(i,0,sz){
+        floop(x,1,N){
+            if (x - a[i] >= 0)
+                dp[x] = (dp[x] + dp[x - a[i]]) % M;
+        }
+    }
     int t;
     cin >> t;
-    while(t--){
-        logic();
+    while (t--) {
+        int n;
+        cin >> n;
+        cout << dp[n] << nl ;
     }
     return 0;
 }
