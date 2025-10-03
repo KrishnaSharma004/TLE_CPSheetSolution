@@ -12,6 +12,7 @@
 #include <set>
 #include <queue>
 using namespace std;
+#define int long long 
 #define ll long long 
 #define pint pair<int,int>
 #define vint vector<int>
@@ -31,6 +32,7 @@ using namespace std;
 #define mint map<int,int>
 #define fauto(i,x) for(auto &i:x)
 #define vpint vector<pair<int,int> >
+#define vvpint vector<vector<pair<int,int>>>
 #define vpll vector<pair<ll,ll> >
 #define umpint unordered_map<int,int>
 #define vvint vector<vector<int> > 
@@ -120,48 +122,45 @@ int dfs(int node,vvint &adj,str &s){
 ll calculateSumOfFirstX(int x){
     return x*1ll*(x+1)/2;
 }
-void logic(){
-    int n;
-    cin >> n;
-    vint a(n);
-    fauto(i,a)
-        cin >> i; 
-
-    vvint pos(n + 1);
-    floop(i,0,n){
-        pos[a[i]].push_back(i);
-    } 
-
-    vint ans(n, -1);
-    floop(i,1,n+1){
-        if (pos[i].empty())
-            continue;
-
-        int mx = pos[i][0] + 1;
-        floop(j,1,pos[i].size()){
-            mx = max(mx, pos[i][j] - pos[i][j - 1]);
-        }
-        mx = max(mx, n - pos[i].back());
-
-            floop(j.mx-1,n){
-            if (ans[j] != -1)
-                break;
-            ans[j] = i; 
-        }
-    } 
-
-    for (auto i : ans)
-        cout << i << sp; 
-    cout << nl;
+bool check(int n) {
+    string s = to_string(n);
+    string str = s;
+    reverse(s.begin(), s.end());
+    return (s == str);
 }
+
 int32_t main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;
-    cin >> t;
-    while(t--){
-        logic();
+
+    int n;
+    cin >> n;
+    vvpint adj(n+1);
+    floop(i,0,n-1){
+        int u,v;
+        cin >> u >> v;
+        adj[u].push_back({v,i});
+        adj[v].push_back({u,i});
+    }
+    vint ans(n-1,-1);
+    int k=0;
+    floop(i,1,n+1){
+        if(adj[i].size()>=3){
+            ans[adj[i][0].second]=0;
+            ans[adj[i][1].second]=1;
+            ans[adj[i][2].second]=2;
+            k=3;
+            break;
+        }
+    }
+    floop(i,0,n-1){
+        if(ans[i]==-1){
+            ans[i]=k++;
+        }
+    }
+    fauto(i,ans){
+        cout << i << nl;
     }
     return 0;
 }
